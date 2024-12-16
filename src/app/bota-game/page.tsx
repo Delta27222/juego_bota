@@ -62,7 +62,7 @@ function HomeBotaPage() {
           <span
             id={`icon-${index}`}
             key={`icon${icon}${index + 10}`}
-            className={`text-center hidden ${wordIndex!== WORDS.length ? 'text-sm opacity-10' : ' text-4xl opacity-100'}`}
+            className={`text-center hidden ${wordIndex!== WORDS.length ? 'text-sm opacity-45' : ' text-4xl opacity-100'}`}
           >
             {icon}
           </span>
