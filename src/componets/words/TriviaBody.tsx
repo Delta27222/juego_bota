@@ -46,13 +46,13 @@ function TriviaBody({
   }, [showCorrectWord]);
 
   return (
-    <section className="flex flex-col justify-start items-center w-full px-5 h-screen mt-[150px] text-white z-50">
+    <section className="flex flex-col justify-start items-center w-full md:px-5 h-screen mt-[150px] text-white z-50">
       <div className="mb-[80px]">
         <p className="text-[30px] md:text-[60px] text-center font-bold ">
           Pregunta #{index} 🎄
         </p>
       </div>
-      <div className="flex flex-col justify-between items-center mb-[80px]">
+      <div className="flex flex-col justify-between items-center mb-[80px] border">
         <h1 className=" text-2xl md:text-4xl text-center">{question}</h1>
       </div>
       <div className="mb-[80px]">
