@@ -38,27 +38,29 @@ function HomeBotaPage() {
     }
   }, [wordIndex])
 
-  const [dimensions, setDimensions] = React.useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
+  console.log("🚀 ~ HomeBotaPage ~ dimensions:", dimensions)
 
-  // Manejar el resize de la ventana
   React.useEffect(() => {
-    const handleResize = () => {
+    // Solo ejecuta en el cliente
+    if (typeof window !== "undefined") {
       setDimensions({
         width: window.innerWidth,
         height: window.innerHeight,
       });
-    };
 
-    // Escuchar el evento resize
-    window.addEventListener("resize", handleResize);
+      const handleResize = () => {
+        setDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      };
 
-    // Limpiar el evento al desmontar
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+      window.addEventListener("resize", handleResize);
 
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, [setDimensions]);
 
   return (
     <section className={`w-full h-screen flex flex-col justify-center items-center z-50 px-5  ${wordIndex === WORDS.length ? 'animate-pulse' : ''}`}>
@@ -91,7 +93,7 @@ function HomeBotaPage() {
         ))}
       </div>
 
-      {showConfetti && <Confetti width={dimensions.width} height={dimensions.height} gravity={0.6} />}
+      {showConfetti && <Confetti width={1500} height={1500} gravity={0.6} />}
     </section>
   );
 }
