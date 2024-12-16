@@ -57,7 +57,7 @@ function HomeBotaPage() {
 
       <div
         key={'icons'}
-        className="flex flex-row justify-center items-center font-bold space-x-3 font-serif text-white">
+        className="flex flex-row justify-center items-center font-bold space-x-3 font-serif text-white z-50">
         {ICONS.map((icon: string, index: number) => (
           <span
             id={`icon-${index}`}
@@ -69,7 +69,7 @@ function HomeBotaPage() {
         ))}
       </div>
 
-      {showConfetti && <Confetti width={400} height={900} gravity={0.6} />}
+      {showConfetti && <div className="z-20"><Confetti width={400} height={900} gravity={0.6} /></div>}
     </section>
   );
 }
