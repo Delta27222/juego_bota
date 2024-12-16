@@ -52,7 +52,7 @@ function TriviaBody({
           Pregunta #{index} 🎄
         </p>
       </div>
-      <div className="flex flex-col justify-between items-center mb-[80px] border">
+      <div className="flex flex-col justify-between items-center mb-[80px]">
         <h1 className=" text-2xl md:text-4xl text-center">{question}</h1>
       </div>
       <div className="mb-[80px]">
