@@ -15,7 +15,7 @@ function HomeBotaPage() {
 
   const firsMessage = () => {
     return (
-      <div className="text-[30px] md:text-[60px] text-center text-green-600 animate-pulse font-bold  md:p-10">
+      <div className="text-[30px] md:text-[60px] text-center text-green-600 animate-pulse md:p-10">
         <h1>¡Bienvenidos equipo ⛰️ al juego de la Bota 2024! 🎄🎅</h1>
       </div>
     );
