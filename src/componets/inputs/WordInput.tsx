@@ -7,7 +7,7 @@ interface Props {
   setLetrasIngresadas: (value: string[]) => void;
   wordIndex: number;
   showCorrectWord: boolean;
-  setShowCorrectWord: (value: boolean) => void
+  setShowCorrectWord: (value: boolean) => void;
 }
 
 const WordInput = ({
@@ -52,12 +52,11 @@ const WordInput = ({
     index: number,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (!inputsRef.current[index]) return;
     const valor = event.target.value.toUpperCase();
 
     // Limitar a un solo carácter
     if (valor.length > 1) {
-      event.target.value = ""; // Limpiar si se intenta ingresar más de un carácter
+      event.target.value = "";
       return;
     }
 
@@ -65,21 +64,10 @@ const WordInput = ({
     nuevasLetras[index] = valor;
     setLetrasIngresadas(nuevasLetras);
 
-    // Enfocar el siguiente input si hay algo escrito y no estamos en el último input
-    if (
-      valor !== "" &&
-      index < palabra.length - 1 &&
-      inputsRef.current[index + 1]
-    ) {
-      // Usamos setTimeout para que el estado se actualice antes de hacer focus
+    // Enfocar el siguiente input si no estamos en el último
+    if (valor !== "" && index < palabra.length - 1) {
       setTimeout(() => {
         inputsRef.current[index + 1]?.focus();
-      }, 0);
-    }
-    // Si se borra, enfocar el input anterior
-    else if (valor === "" && index > 0 && inputsRef.current[index - 1]) {
-      setTimeout(() => {
-        inputsRef.current[index - 1]?.focus();
       }, 0);
     }
   };
@@ -98,13 +86,23 @@ const WordInput = ({
     }
   };
 
+  const handleFocus = (
+    index: number,
+    event: React.FocusEvent<HTMLInputElement>
+  ) => {
+    // En dispositivos móviles, prevenir que el teclado se cierre al cambiar entre inputs
+    event.preventDefault();
+    if (inputsRef.current[index]) {
+      inputsRef.current[index]?.focus();
+    }
+  };
+
   const cuadrados = palabra.split("").map((letra, index) => {
     const esCorrecta = letrasIngresadas[index] === letra.toUpperCase();
     const esIncorrecta = letrasIngresadas[index] !== "" && !esCorrecta;
     let show = "";
     if (response[wordIndex] === index && showCorrectWord) {
       show = "text-4xl bg-blue-500";
-      //buscamos el icono para visualizarlo
       const icon = document.getElementById(`icon-${position[wordIndex]}`);
       if (icon) {
         icon.classList.remove("hidden");
@@ -116,13 +114,12 @@ const WordInput = ({
         ? "bg-red-500"
         : "bg-black";
     }
+
     return (
       <input
         key={`${letra}-${index}-${Math.random()}`} // Clave única
         ref={(el) => {
-          if (el) {
-            inputsRef.current[index] = el;
-          }
+          if (el) inputsRef.current[index] = el;
         }}
         type="text"
         disabled={esCorrecta}
@@ -130,6 +127,7 @@ const WordInput = ({
         value={letrasIngresadas[index]}
         onChange={(event) => handleChange(index, event)}
         onKeyDown={(event) => handleKeyDown(index, event)}
+        onFocus={(event) => handleFocus(index, event)}
         className={`border-none text-white w-[40px] h-[40px] text-center font-bold rounded font-sans ${show}`}
         style={{
           imeMode: "disabled",

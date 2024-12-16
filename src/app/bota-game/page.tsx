@@ -69,7 +69,7 @@ function HomeBotaPage() {
         ))}
       </div>
 
-      {showConfetti && <Confetti width={100} height={100} gravity={0.6} />}
+      {showConfetti && <Confetti width={400} height={900} gravity={0.6} />}
     </section>
   );
 }
