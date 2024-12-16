@@ -53,7 +53,7 @@ function TriviaBody({
         </p>
       </div>
       <div className="flex flex-col justify-between items-center mb-[80px]">
-        <h1 className=" text-xl md:text-4xl text-center">{question}</h1>
+        <h1 className=" text-2xl md:text-4xl text-center">{question}</h1>
       </div>
       <div className="mb-[80px]">
         <WordInput
