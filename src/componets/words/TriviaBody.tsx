@@ -1,5 +1,6 @@
 import React from "react";
 import WordInput from "../inputs/WordInput";
+import Confetti from "react-confetti";
 
 interface TriviaBodyProps {
   word: string;
@@ -7,7 +8,6 @@ interface TriviaBodyProps {
   index?: number;
   wordIndex: number;
   setWordIndex: (value: number) => void;
-  setShowConfetti: (value: boolean) => void;
 }
 
 function TriviaBody({
@@ -16,9 +16,7 @@ function TriviaBody({
   index,
   wordIndex,
   setWordIndex,
-  setShowConfetti,
 }: TriviaBodyProps) {
-  console.log("🚀 ~ wordIndex:", wordIndex);
 
   const [renderNext, setRenderNext] = React.useState(false);
   const [showCorrectWord, setShowCorrectWord] = React.useState(false);
@@ -33,17 +31,6 @@ function TriviaBody({
     setShowCorrectWord(false);
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  React.useEffect(() => {
-    if(wordIndex !== 8){
-      if (showCorrectWord) {
-        setShowConfetti(true);
-      }
-      setTimeout(() => {
-        setShowConfetti(false);
-      }, 7000);
-    }
-  }, [showCorrectWord]);
 
   return (
     <section className="flex flex-col justify-start items-center w-full md:px-5 h-screen mt-[150px] text-white z-50">
@@ -67,13 +54,16 @@ function TriviaBody({
         />
       </div>
       {renderNext && (
-        <button
-          type="button"
-          className="bg-green-500 hover:bg-green-700 text-white font-extrabold py-2 px-4 rounded text-[20px]"
-          onClick={onClick}
-        >
-          Siguiente
-        </button>
+        <div>
+          <button
+            type="button"
+            className="bg-green-500 hover:bg-green-700 text-white font-extrabold py-2 px-4 rounded text-[20px]"
+            onClick={onClick}
+          >
+            Siguiente
+          </button>
+          <div className="z-20 flex flex-col justify-center items-center"><Confetti width={350} height={900} gravity={0.6} /></div>
+        </div>
       )}
     </section>
   );

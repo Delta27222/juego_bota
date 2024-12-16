@@ -3,7 +3,6 @@
 import Surprice from "@/componets/surprice/Surprice";
 import TriviaBody from "@/componets/words/TriviaBody";
 import React from "react";
-import Confetti from "react-confetti";
 
 function HomeBotaPage() {
   const WORDS = JSON.parse(process.env.NEXT_PUBLIC_WORDS || "[]");
@@ -11,7 +10,6 @@ function HomeBotaPage() {
   const ICONS = JSON.parse(process.env.NEXT_PUBLIC_LETTERS || "[]");
   const [gameState, setGameState] = React.useState(true);
   const [wordIndex, setWordIndex] = React.useState(0);
-  const [showConfetti, setShowConfetti] = React.useState(false);
 
   const firsMessage = () => {
     return (
@@ -49,7 +47,6 @@ function HomeBotaPage() {
           index={wordIndex + 1}
           wordIndex={wordIndex}
           setWordIndex={setWordIndex}
-          setShowConfetti={setShowConfetti}
         />
       ) : (
         <Surprice />
@@ -69,7 +66,6 @@ function HomeBotaPage() {
         ))}
       </div>
 
-      {showConfetti && <div className="z-20 flex flex-col justify-center items-center"><Confetti width={350} height={900} gravity={0.6} /></div>}
     </section>
   );
 }
