@@ -79,7 +79,7 @@ const WordInput = ({
     const esIncorrecta = letrasIngresadas[index] !== "" && !esCorrecta;
     let show = "";
     if (response[wordIndex] === index && showCorrectWord) {
-      show = "text-xl bg-blue-500";
+      show = "text-2xl bg-blue-500";
       const icon = document.getElementById(`icon-${position[wordIndex]}`);
       if (icon) {
         icon.classList.remove("hidden");
