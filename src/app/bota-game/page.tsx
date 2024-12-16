@@ -15,7 +15,7 @@ function HomeBotaPage() {
 
   const firsMessage = () => {
     return (
-      <div className="text-[30px] md:text-[60px] text-center text-green-600 animate-pulse  p-10">
+      <div className="text-[30px] md:text-[60px] text-center text-green-600 animate-pulse px-4 md:p-10">
         <h1>¡Bienvenido/a al emocionante juego de la Bota! 🎄🎅</h1>
       </div>
     );
@@ -69,7 +69,7 @@ function HomeBotaPage() {
         ))}
       </div>
 
-      {showConfetti && <div className="z-20"><Confetti width={350} height={900} gravity={0.6} /></div>}
+      {showConfetti && <div className="z-20 flex flex-col justify-center items-center"><Confetti width={350} height={900} gravity={0.6} /></div>}
     </section>
   );
 }
