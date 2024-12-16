@@ -69,7 +69,7 @@ function HomeBotaPage() {
         ))}
       </div>
 
-      {showConfetti && <div className="z-20"><Confetti width={400} height={900} gravity={0.6} /></div>}
+      {showConfetti && <div className="z-20"><Confetti width={350} height={900} gravity={0.6} /></div>}
     </section>
   );
 }
