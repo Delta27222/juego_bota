@@ -48,12 +48,12 @@ function TriviaBody({
   return (
     <section className="flex flex-col justify-start items-center w-full px-5 h-screen mt-[150px] text-white">
       <div className="mb-[80px]">
-        <p className="text-[35px] md:text-[60px] text-center font-bold ">
+        <p className="text-[30px] md:text-[60px] text-center font-bold ">
           Pregunta #{index} 🎄
         </p>
       </div>
       <div className="flex flex-col justify-between items-center mb-[80px]">
-        <h1 className=" text-4xl text-center">{question}</h1>
+        <h1 className=" text-xl md:text-4xl text-center">{question}</h1>
       </div>
       <div className="mb-[80px]">
         <WordInput

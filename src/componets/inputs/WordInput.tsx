@@ -106,12 +106,12 @@ const WordInput = ({
         value={letrasIngresadas[index]}
         onChange={(event) => handleChange(index, event)}
         onKeyDown={(event) => handleKeyDown(index, event)}
-        className={`border-none text-white w-[30px] h-[30px] md:w-[40px] md:h-[40px] text-center font-bold rounded font-sans ${show}`}
+        className={`border-none text-white text-center font-bold rounded font-sans ${show}`}
         style={{
           imeMode: "disabled",
           caretColor: "transparent",
-          width: "40px",
-          height: "40px",
+          width: "25px",
+          height: "25px",
         }}
       />
     );
