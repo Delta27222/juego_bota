@@ -1,4 +1,5 @@
-import React from "react";
+// biome-ignore lint/style/useImportType: <explanation>
+import React, { useEffect, useState } from "react";
 
 interface Props {
   palabra: string;
@@ -7,7 +8,7 @@ interface Props {
   setLetrasIngresadas: (value: string[]) => void;
   wordIndex: number;
   showCorrectWord: boolean;
-  setShowCorrectWord: (value: boolean) => void
+  setShowCorrectWord: (value: boolean) => void;
 }
 
 const WordInput = ({
@@ -19,27 +20,16 @@ const WordInput = ({
   showCorrectWord,
   setShowCorrectWord,
 }: Props) => {
-  const inputsRef = React.useRef<(HTMLInputElement | null)[]>([]); // Cambiado para aceptar null
+  const [focusedIndex, setFocusedIndex] = useState<number>(0); // Controlamos el índice del input enfocado
+
   const response = JSON.parse(process.env.NEXT_PUBLIC_RESPONSES || "[]");
   const position = JSON.parse(process.env.NEXT_PUBLIC_WORD_POSITIONS || "[]");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLetrasIngresadas(Array(palabra.length).fill(""));
   }, [palabra, setLetrasIngresadas]);
 
-  React.useEffect(() => {
-    // Inicializar los refs correctamente
-    inputsRef.current = inputsRef.current.slice(0, palabra.length); // Ajustamos el tamaño de los refs según la longitud de la palabra
-  }, [palabra]);
-
-  React.useEffect(() => {
-    // Enfocar el primer input cuando se monta
-    if (inputsRef.current[0]) {
-      inputsRef.current[0]?.focus();
-    }
-  }, []);
-
-  React.useEffect(() => {
+  useEffect(() => {
     // Verifica si la palabra está completa y es correcta
     const palabraCompleta = letrasIngresadas.join("");
     if (palabraCompleta === palabra.toUpperCase() && setRenderNext) {
@@ -52,12 +42,11 @@ const WordInput = ({
     index: number,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (!inputsRef.current[index]) return;
     const valor = event.target.value.toUpperCase();
 
     // Limitar a un solo carácter
     if (valor.length > 1) {
-      event.target.value = ""; // Limpiar si se intenta ingresar más de un carácter
+      event.target.value = "";
       return;
     }
 
@@ -65,22 +54,9 @@ const WordInput = ({
     nuevasLetras[index] = valor;
     setLetrasIngresadas(nuevasLetras);
 
-    // Enfocar el siguiente input si hay algo escrito y no estamos en el último input
-    if (
-      valor !== "" &&
-      index < palabra.length - 1 &&
-      inputsRef.current[index + 1]
-    ) {
-      // Usamos setTimeout para que el estado se actualice antes de hacer focus
-      setTimeout(() => {
-        inputsRef.current[index + 1]?.focus();
-      }, 0);
-    }
-    // Si se borra, enfocar el input anterior
-    else if (valor === "" && index > 0 && inputsRef.current[index - 1]) {
-      setTimeout(() => {
-        inputsRef.current[index - 1]?.focus();
-      }, 0);
+    // Enfocar el siguiente input si no estamos en el último
+    if (valor !== "" && index < palabra.length - 1) {
+      setFocusedIndex(index + 1); // Actualizamos el índice del foco
     }
   };
 
@@ -94,7 +70,7 @@ const WordInput = ({
       letrasIngresadas[index] === "" &&
       index > 0
     ) {
-      inputsRef.current[index - 1]?.focus();
+      setFocusedIndex(index - 1); // Mover al input anterior
     }
   };
 
@@ -104,7 +80,6 @@ const WordInput = ({
     let show = "";
     if (response[wordIndex] === index && showCorrectWord) {
       show = "text-4xl bg-blue-500";
-      //buscamos el icono para visualizarlo
       const icon = document.getElementById(`icon-${position[wordIndex]}`);
       if (icon) {
         icon.classList.remove("hidden");
@@ -116,21 +91,22 @@ const WordInput = ({
         ? "bg-red-500"
         : "bg-black";
     }
+
     return (
       <input
         key={`${letra}-${index}-${Math.random()}`} // Clave única
-        ref={(el) => {
-          if (el) {
-            inputsRef.current[index] = el;
+        ref={(input) => {
+          if (index === focusedIndex && input) {
+            input.focus();
           }
-        }}
+        }} // Asignamos autofocus en el índice correspondiente
         type="text"
         disabled={esCorrecta}
         maxLength={1}
         value={letrasIngresadas[index]}
         onChange={(event) => handleChange(index, event)}
         onKeyDown={(event) => handleKeyDown(index, event)}
-        className={`border-none text-white w-[15px] h-[15px] md:w-[40px] md:h-[40px] text-center font-bold rounded font-sans ${show}`}
+        className={`border-none text-white w-[30px] h-[30px] md:w-[40px] md:h-[40px] text-center font-bold rounded font-sans ${show}`}
         style={{
           imeMode: "disabled",
           caretColor: "transparent",
