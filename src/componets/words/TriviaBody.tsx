@@ -46,7 +46,7 @@ function TriviaBody({
   }, [showCorrectWord]);
 
   return (
-    <section className="flex flex-col justify-start items-center w-full px-5 h-screen mt-[150px] text-white">
+    <section className="flex flex-col justify-start items-center w-full px-5 h-screen mt-[150px] text-white z-50">
       <div className="mb-[80px]">
         <p className="text-[30px] md:text-[60px] text-center font-bold ">
           Pregunta #{index} 🎄
